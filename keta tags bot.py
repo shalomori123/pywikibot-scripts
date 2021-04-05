@@ -22,9 +22,9 @@ class KetaTagsBot(SingleSiteBot, ExistingPageBot):
 			summary = ''
 			oldtext = page.text
 			
-			page.text = re.sub('===?.*?===?\s+(==)', '\\1', page.text)  # remove empty sections
-			page.text = re.sub('===?.*?===?\s+(==)', '\\1', page.text)
-			page.text = re.sub('===?.*?===?\s+(==)', '\\1', page.text)
+			page.text = re.sub('===.*?===\s+(==)', '\\1', page.text)  # remove empty sections
+			page.text = re.sub('===.*?===\s+(==)', '\\1', page.text)
+			page.text = re.sub('===.*?===\s+(==)', '\\1', page.text)
 			if page.text != oldtext:
 				summary += 'הסרת פסקאות ריקות, '
 			

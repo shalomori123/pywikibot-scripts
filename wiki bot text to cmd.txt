@@ -1,5 +1,4 @@
 cd /storage/emulated/0/python/pywikibot
-
 python pwb.py pagefromfile -lang:he -family:wikisource -showdiff -notitle -appendbottom -autosummary -file:"/storage/emulated/0/MyAppSharer/.txt"
 
 -titlestart:xxx -titleend:xxx
@@ -38,5 +37,5 @@ python pwb.py category add -links:'ר"ן על הרי"ף'
 cd /storage/emulated/0/python/pywikibot
 python pwb.py 'bot mefarshim to daf'
 
-cd C:\Users\דנינו\שלום אורי\python\pywikibot
-python pwb.py "bot mefarshim to daf"
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'Caf Hahaim transform bot'

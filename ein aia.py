@@ -6,7 +6,7 @@ mainmainpage = pywikibot.Page(site, 'עין איה')
 mainpages = mainmainpage.linkedPages()
 for mainpage in mainpages:
 	print(mainpage.title())
-	if not re.match('עין איה/שבת', mainpage.title()):
+	if not re.match('עין איה', mainpage.title()):
 		continue
 	pages = mainpage.linkedPages()
 	x=''

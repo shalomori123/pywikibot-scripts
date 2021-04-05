@@ -15,6 +15,9 @@ class MefarshimToDafBot(SingleSiteBot, ExistingPageBot):
 		self.until = ''
 	
 	def treat(self, page):
+		if page.isRedirectPage():
+			page = page.getRedirectTarget()
+		
 		title_words = page.title().split(' ')
 		
 		if len(title_words) == 3:
@@ -28,7 +31,7 @@ class MefarshimToDafBot(SingleSiteBot, ExistingPageBot):
 		daf = title_words[-2]
 		amud = title_words[-1]
 		
-		if page.title().startswith('בבלי') or masechet[0] in ['ב']:
+		if page.title().startswith('בבלי') or masechet[0] in ['ב', 'ג', 'ה', 'ז', 'ח', 'י', 'כ', 'מ', 'נ', 'ס']:
 			return
 		
 		if daf+' '+amud == 'ב א':
