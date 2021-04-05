@@ -1,0 +1,42 @@
+cd /storage/emulated/0/python/pywikibot
+
+python pwb.py pagefromfile -lang:he -family:wikisource -showdiff -notitle -appendbottom -autosummary -file:"/storage/emulated/0/MyAppSharer/.txt"
+
+-titlestart:xxx -titleend:xxx
+
+{{-stop-}}
+{{-start-}}
+'''רב ניסים גאון על הש"ס/שבת/פרק א'''
+{{מפרשים למסכת שבת|רב ניסים גאון|א}}
+{{תוכן עניינים שטוח}}
+{{המרת או.סי.אר 2}}
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'bot for rashi'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'mefarshim temp'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'bot for tavniot mefarshim'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'nedarim bot'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'cotarot shitmaq'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'ein aia'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'keta tags bot'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py category add -links:'ר"ן על הרי"ף'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'bot mefarshim to daf'
+
+cd C:\Users\דנינו\שלום אורי\python\pywikibot
+python pwb.py "bot mefarshim to daf"
