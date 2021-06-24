@@ -1,5 +1,5 @@
 cd /storage/emulated/0/python/pywikibot
-python pwb.py pagefromfile -lang:he -family:wikisource -showdiff -notitle -appendbottom -autosummary -file:"/storage/emulated/0/MyAppSharer/.txt"
+python pwb.py pagefromfile -lang:he -family:wikisource -user:shalomori123 -showdiff -notitle -appendbottom -autosummary -file:"/storage/emulated/0/MyAppSharer/.txt"
 
 -titlestart:xxx -titleend:xxx
 
@@ -9,6 +9,12 @@ python pwb.py pagefromfile -lang:he -family:wikisource -showdiff -notitle -appen
 {{מפרשים למסכת שבת|רב ניסים גאון|א}}
 {{תוכן עניינים שטוח}}
 {{המרת או.סי.אר 2}}
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'keta tags bot'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py redirect.py double
 
 cd /storage/emulated/0/python/pywikibot
 python pwb.py 'bot for rashi'
@@ -29,9 +35,6 @@ cd /storage/emulated/0/python/pywikibot
 python pwb.py 'ein aia'
 
 cd /storage/emulated/0/python/pywikibot
-python pwb.py 'keta tags bot'
-
-cd /storage/emulated/0/python/pywikibot
 python pwb.py category add -links:'ר"ן על הרי"ף'
 
 cd /storage/emulated/0/python/pywikibot
@@ -39,3 +42,28 @@ python pwb.py 'bot mefarshim to daf'
 
 cd /storage/emulated/0/python/pywikibot
 python pwb.py 'Caf Hahaim transform bot'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'edit ran bot'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py replace -ns:0 '[[en:Mishnah' '[[en:Translation:Mishnah' -prefixindex:משנה
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py replace '(שבי"ל)' '([[מחבר:שבי"ל|שבי"ל]])' -addcat:'ספר המילים של שבי"ל' -start:רגע2 -namespace:106
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py claimit -lang:he -family:wikipedia -links:'תבנית:תנאים' -ns:0 -exists:p P31 Q975574
+Q55649849
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py "hapeli'a transfer"
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py "sha'ar hagilgulim transfer bot"
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'nivut malbim'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py add_text -text:'\n[[קטגוריה:דפי פרק במלבי"ם]]' -links:'משתמש:Shalomori123/קישורים לבוט' -always
