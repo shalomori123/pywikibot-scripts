@@ -67,3 +67,21 @@ python pwb.py 'nivut malbim'
 
 cd /storage/emulated/0/python/pywikibot
 python pwb.py add_text -text:'\n[[קטגוריה:דפי פרק במלבי"ם]]' -links:'משתמש:Shalomori123/קישורים לבוט' -always
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'mishlei param'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py replace '|32|קהלת}}' '|33|קהלת}}' -prefixindex:'קטגוריה:קהלת'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py replace '|28|איוב}}' '|29|איוב}}' -prefixindex:'קטגוריה:איוב'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py replace '|31|שיר+השירים}}' '|30|שיר+השירים}}' -prefixindex:'קטגוריה:שיר השירים' -summary:'תיקון פרמטר'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py replace '|30|רות}}' '|31|רות}}' -prefixindex:'קטגוריה:רות' -summary:'תיקון פרמטר'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py replace '|33|איכה}}' '|32|איכה}}' -prefixindex:'קטגוריה:איכה' -summary:'תיקון פרמטר'
