@@ -11,7 +11,16 @@ python pwb.py pagefromfile -lang:he -family:wikisource -user:shalomori123 -showd
 {{המרת או.סי.אר 2}}
 
 cd /storage/emulated/0/python/pywikibot
+python pwb.py generate_user_files
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py login
+
+cd /storage/emulated/0/python/pywikibot
 python pwb.py 'keta tags bot'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'empty draft'
 
 cd /storage/emulated/0/python/pywikibot
 python pwb.py redirect.py double
@@ -85,3 +94,47 @@ python pwb.py replace '|30|רות}}' '|31|רות}}' -prefixindex:'קטגוריה
 
 cd /storage/emulated/0/python/pywikibot
 python pwb.py replace '|33|איכה}}' '|32|איכה}}' -prefixindex:'קטגוריה:איכה' -summary:'תיקון פרמטר'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py replace '#הפניה [[:קטגוריה:תהלים' '#הפניה [[תהלים' -titleregex:'תהילים ק?[ט-צ]?[א-ט]?' -prefixindex:תהילים
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'keta transform bot'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'transform sarei'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py replace -ns:0 '[[קטע:' '[[' '{{קטע:' '{{:'
+
+python pwb.py replace -ns:0 -start:! '[[s:קטע:' '[[s:' '[[S:קטע:' '[[s:' '{{ויקיטקסט|קטע:' '{{ויקיטקסט|'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py add_text -up -ns:0 -start:'רש"י על דברי הימים' -titleregex:'רש"י על (בראשית|שמות|ויקרא|במדבר|דברים|יהושע|שופטים|שמואל א|שמואל ב|מלכים א|מלכים ב|ישעיהו|ירמיהו|יחזקאל|תרי עשר|הושע|יואל|עמוס|עובדיה|יונה|מיכה|נחום|חבקוק|צפניה|חגי|זכריה|מלאכי|תהלים|משלי|איוב|שיר השירים|רות|אסתר|קהלת|איכה|דניאל|עזרא|נחמיה|דברי הימים א|דברי הימים ב) (ק?[ט-צ]?[א-ט]?) (ק?[ט-צ]?[א-ט]?)' -text:'<noinclude>{{ניווט לקטע ברש"י|{{ס:#invoke:String|reverse|{{ס:החלף|{{ס:#invoke:String|reverse|{{ס:החלף|{{ס:שם הדף}}|רש&#34;י על |}}}}| |{{ס:!}}|count=2}}}}}}</noinclude>' -grepnot:'\{\{(ניווט ל)?קטע ברש"י\|' -summary:'{{ניווט לקטע ברש"י}}' -site:wikisource:he -pt:0
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py replace -ref:'תבנית:דף רי"ף' "\{\{דף רי\"ף\|(דף |דף רי\"ף |)([ט-צ]?)\"?([א-ט]?)\'? ע?\"?([אב])\}\}" '{{דף רי"ף|\2\3|\4}}' -regex -site:wikisource:he -pt:0 -summary:'שינוי פורמט ל[[תבנית:דף רי"ף]]'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'creat ben sira psukim'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'creat rif dafs'
+
+cd /srv/paws/pwb
+python pwb.py 'creat rif dafs' -pt:0
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'clear rif dafs'
+
+cd /storage/emulated/0/python/pywikibot
+python pwb.py 'edit radak psalms'
+
+cd /srv/paws/pwb
+python pwb.py add_text -text:'{{ניווט ספר|שם הספר=שיחות הר"ן|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}\n{{#קטע:שיחות הר"ן/שלם|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}' -links:'שיחות הר"ן' -create -site:wikisource:he
+
+cd /srv/paws/pwb
+python pwb.py replace '|מרחב=קטע:' '' -prefix:'מ"ג'
+
+cd /srv/paws/pwb
+python pwb.py add_text -text:'{{ניווט ספר|שם הספר=השתפכות הנפש|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}\n{{#קטע:השתפכות הנפש/הכל|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}' -links:'משתמש:Shalomori123/קישורים לבוט' -create -site:wikisource:he

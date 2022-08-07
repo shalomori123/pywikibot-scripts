@@ -65,12 +65,20 @@ class KetaTagsBot(SingleSiteBot, ExistingPageBot):
 		#regex = '== ?פסוק ([ט-פ]?[א-ט]?) ?==' # for kli yakar
 		#regex = '==[א-ת \/\"\[\]\|=]*?פסוק ([ט-פ]?[א-ט]?)[ \[\]]*?===?' # for rabeinu behaye
 		#regex = "\n\(([ט-פ]?[א-ט]?)\) " # for baal haturim
-		regex = "\n[\(\{]([ט-פ]?[א-ט]?).*?[\)\}] " # for malbim
+		#regex = "\n[\(\{]([ט-פ]?[א-ט]?).*?[\)\}] " # for malbim
+		#regex = '=== ?משנה ([ט-צ]?[א-ט]?) ?===' # for magen avot
+		#regex = '==[א-ת \[\]\|\/"=]*?דף (ק?[ט-צ]?[א-י]?) עמוד ([אב])[ \[\]]*?===?' # for gemara's mefaresh
+		#regex = ' ?\{\{דף רי"ף\|([ט-צ]?[א-ט]?)\|([אב])\}\} ?' # rif
+		#regex = '==[א-ת \/\"\[\]\|=]*?דף (ק?[ט-צ]?[א-י]?) עמוד ([אב])[ \[\]]*?===?' # ran on rif
+		regex = '===? ?([ק-ת]?[ט-צ]?[א-ט]?) ?===?' #sikhot haran
+		#regex = '(\(.*?\)\n\n)*(\(.*?\) )?\[[ט-צ]?[א-ט]?, ([ט-צ]?[א-ט]?)\] '#ben sira
+		#regex = '=== ?פסוק (ק?[ט-צ]?[א-ט]?) ?===' #ibn ezra
 		
 		title_iter = re.finditer(regex, page.text)
-		titles = [x.group() for x in title_iter] # get all the match
+		titles = [x.group() for x in title_iter] # get all the matches
 		keta_names = [re.sub(regex, '\\1', title) for title in titles] # get the group
 		#keta_names = [re.sub(regex, '\\2', title) for title in titles]
+		#keta_names = [re.sub(regex, '\\1 \\2', title) for title in titles]
 		
 		return titles, keta_names
 	
@@ -108,7 +116,7 @@ class KetaTagsBot(SingleSiteBot, ExistingPageBot):
 					'<קטע סוף=%s/>%s\n' % (keta_names[i-1], title))
 					continue
 			
-			if i == 0:
+			if i == 0 or '<קטע סוף=%s/>' % keta_names[i-1] in page.text:
 				page.text = page.text.replace(title, '%s\n<קטע התחלה=%s/>' % (title, keta_names[i]))
 			else:
 				page.text = page.text.replace(title, 
@@ -152,6 +160,20 @@ prefix = ''
 # prefix = 'רש"ש על המשנה/'
 # prefix = 'אבי עזר/'
 # mainpage = 'בעל הטורים על התורה'
+# prefix = 'מגן אבות (רשב"ץ)/חלק ד/פרק '
+# prefix = 'מדרש שמואל (אוזידא)/'
+# prefix = 'חידושי הרמב"ם על ראש השנה'
+# prefix = 'עורך מתחיל/נימוקי יוסף'
+# prefix = 'רי"ף על הש"ס/'
+# prefix = 'ר"ן על הרי"ף/שבועות/פרק'
+# prefix = 'שיחות הר"ן/שלם'
+# prefix = 'אבן עזרא על תהלים'
+# prefix = 'השתפכות הנפש/הכל'
+#prefix = 'השגות הראב"ד על הרי"ף/ברכות'
+#prefix = 'שלטי הגיבורים על הרי"ף/ברכות'
+#prefix = 'רש"י על הרי"ף/ברכות'
+#prefix = 'תלמידי רבנו יונה על הרי"ף'
+prefix = 'חיי מוהר"ן/ספר שלם'
 
 mainpage = 'משתמש:Shalomori123/קישורים לבוט'
 
