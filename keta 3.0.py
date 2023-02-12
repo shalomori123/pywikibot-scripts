@@ -66,10 +66,10 @@ class KetaTagsBot(SingleSiteBot, ExistingPageBot):
 	
 	
 	def remove_empty_sections(self, page):
+		oldtext = page.text
+		text = oldtext
 		if not self.opt.remove_empty:
 			return text
-		oldtext = page.text
-		text = page.text
 		
 		#can be replaced by: (but not working)
 		#cctk = CosmeticChangesToolkit(page)
@@ -86,6 +86,7 @@ class KetaTagsBot(SingleSiteBot, ExistingPageBot):
 		
 	def extract_sections(self, text):
 		if not self.opt.titles:
+			textlib._create_default_regexes()
 			textlib._regex_cache['header'] = re.compile(self.opt.regex)
 		return textlib.extract_sections(text, self.site)
 	
@@ -126,6 +127,9 @@ class KetaTagsBot(SingleSiteBot, ExistingPageBot):
 				content = content.replace(' '+keta_end, keta_end+' ')
 			while keta_start+' ' in content:
 				content = content.replace(keta_start+' ', ' '+keta_start)
+			#to avoid damage from titles
+			content = content.replace(keta_start+'==', keta_start+'\n==')
+			content = content.replace('=='+keta_end, '==\n'+keta_end)
 			
 			new_section = textlib._Section(section.title, content)
 			new_sections.append(new_section)
@@ -169,7 +173,7 @@ def main(*args: str) -> None:
     for arg in local_args:
         arg, sep, value = arg.partition(':')
         option = arg[1:]
-        if option in ('regex', 'group'):
+        if option in ('regex', 'group', 'summary'):
             options[option] = value
         elif option in ('titles', 'remove_empty', 'minor', 'always'):
             options[option] = True

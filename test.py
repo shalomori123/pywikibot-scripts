@@ -1,17 +1,13 @@
 import pywikibot
-from pywikibot import textlib
-
-#class TestBot(pywikibot.Bot):
-#	def __init__(self, **kwargs):
-#		self.generator = site.allpages()
-#		super().__init__(**kwargs)
-#	
-#	def treat(self, page):
-#		textlib.extract_sections(page.text)
+#import re
 
 site = pywikibot.Site()
-#bot = TestBot(site=site)
-#bot.run()
+#page = pywikibot.Page(site, 'ספר יראים/כל')
+#text = page.text[:16000]
+#print(text)
+#regex = '<קטע סוף=\{\{פסוק קודם\|\{\{המרת מספרים לאותיות\|(\d+)\}\}\}\}>\s*<קטע התחלה=(\{\{המרת מספרים לאותיות\||)\\1\}?\}?>'
+#print(re.findall(regex, text))
 
-#for page in site.allpages():
-print(textlib.extract_sections('', site))
+from pywikibot.textlib import extract_sections
+page = pywikibot.Page(site, 'בעל הטורים על התורה/במדבר/ב')
+print(extract_sections(page.text, site))
