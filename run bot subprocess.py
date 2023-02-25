@@ -1,5 +1,4 @@
-"""This is the new version of "wiki bot text to cmd.txt" which was text file to copy and paste.
-This file uses subprocesses to run the bot directly from python."""
+"""This file uses subprocesses to run the bot directly from python."""
 
 from subprocess import run
 from os import chdir
@@ -57,7 +56,7 @@ draft = '-page:משתמש:Shalomori123/טיוטה'
 #run(call + ['delete', '-prefixindex:', main_user, '-summary:נוצר בטעות'])
 
 
-# in work: (bots that i want to run but need more improve)
+#in work: (bots that i want to run but need more improve)
 #run(call + ['replace', '<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" />', '<קטע \\1=\\2/>', '<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" ([^>\s].*?)="" />', '<קטע \\1=\\2 \\3/>', "'''<קטע התחלה ?= ?([^>\s].*?)/>", "<קטע התחלה=\\1/>'''", "<קטע סוף ?= ?([^>\s].*?)/>'''", "'''<קטע סוף=\\1/>", '-regex', '-summary:תיקון נזקי העורך החזותי לתגי קטע'])
 #run(call + ['add_text', '-text:\n[[קטגוריה:הפניות מהמרחב הראשי למרחב ביאור]]', '-start:!', '-ns:0', '-grep:# ?הפניה \[\[ביאור:'])
 #run(call + ['replace', '\{\{(מ"מ|ממ)\|([^\}].+)\|ק=\{\{שם הדף\}\}\}\}', '{{הפ|\\2}}', '-regex', '-start:!'])
@@ -243,3 +242,53 @@ draft = '-page:משתמש:Shalomori123/טיוטה'
 #run(call + ['replace', 'אבן עזרה}}', 'אבן עזרא}}', '-prefixindex:ביאור:מ"ג'])
 #run(call + ['replace', '[[קטע:', '[[', '-prefixindex:מצודות על ירמיה',
 #pt, '-summary:תיקון הפניה שבורה'])
+
+
+
+#old archive: (converted automaticly to subprocess format)
+#run("python pwb.py pagefromfile -lang:he -family:wikisource -user:shalomori123 -showdiff -notitle -appendbottom -autosummary -file:"/storage/emulated/0/MyAppSharer/.txt"")
+#run("python pwb.py generate_user_files")
+#run("python pwb.py login")
+#run("python pwb.py 'keta tags bot'")
+#run("python pwb.py 'empty draft'")
+#run("python pwb.py redirect.py double")
+#run("python pwb.py 'bot for rashi'")
+#run("python pwb.py 'mefarshim temp'")
+#run("python pwb.py 'bot for tavniot mefarshim'")
+#run("python pwb.py 'nedarim bot'")
+#run("python pwb.py 'cotarot shitmaq'")
+#run("python pwb.py 'ein aia'")
+#run("python pwb.py category add -links:'ר"ן על הרי"ף'")
+#run("python pwb.py 'bot mefarshim to daf'")
+#run("python pwb.py 'Caf Hahaim transform bot'")
+#run("python pwb.py 'edit ran bot'")
+#run("python pwb.py replace -ns:0 '[[en:Mishnah' '[[en:Translation:Mishnah' -prefixindex:משנה")
+#run("python pwb.py replace '(שבי"ל)' '([[מחבר:שבי"ל|שבי"ל]])' -addcat:'ספר המילים של שבי"ל' -start:רגע2 -namespace:106")
+#run("python pwb.py claimit -lang:he -family:wikipedia -links:'תבנית:תנאים' -ns:0 -exists:p P31 Q975574")
+#Q55649849
+#run("python pwb.py "hapeli'a transfer"")
+#run("python pwb.py "sha'ar hagilgulim transfer bot"")
+#run("python pwb.py 'nivut malbim'")
+#run("python pwb.py add_text -text:'\n[[קטגוריה:דפי פרק במלבי"ם]]' -links:'משתמש:Shalomori123/קישורים לבוט' -always")
+#run("python pwb.py 'mishlei param'")
+#run("python pwb.py replace '|32|קהלת}}' '|33|קהלת}}' -prefixindex:'קטגוריה:קהלת'")
+#run("python pwb.py replace '|28|איוב}}' '|29|איוב}}' -prefixindex:'קטגוריה:איוב'")
+#run("python pwb.py replace '|31|שיר+השירים}}' '|30|שיר+השירים}}' -prefixindex:'קטגוריה:שיר השירים' -summary:'תיקון פרמטר'")
+#run("python pwb.py replace '|30|רות}}' '|31|רות}}' -prefixindex:'קטגוריה:רות' -summary:'תיקון פרמטר'")
+#run("python pwb.py replace '|33|איכה}}' '|32|איכה}}' -prefixindex:'קטגוריה:איכה' -summary:'תיקון פרמטר'")
+#run("python pwb.py replace '#הפניה [[:קטגוריה:תהלים' '#הפניה [[תהלים' -titleregex:'תהילים ק?[ט-צ]?[א-ט]?' -prefixindex:תהילים")
+#run("python pwb.py 'keta transform bot'")
+#run("python pwb.py 'transform sarei'")
+#run("python pwb.py replace -ns:0 '[[קטע:' '[[' '{{קטע:' '{{:'")
+#run("python pwb.py replace -ns:0 -start:! '[[s:קטע:' '[[s:' '[[S:קטע:' '[[s:' '{{ויקיטקסט|קטע:' '{{ויקיטקסט|'")
+#run("python pwb.py add_text -up -ns:0 -start:'רש"י על דברי הימים' -titleregex:'רש"י על (בראשית|שמות|ויקרא|במדבר|דברים|יהושע|שופטים|שמואל א|שמואל ב|מלכים א|מלכים ב|ישעיהו|ירמיהו|יחזקאל|תרי עשר|הושע|יואל|עמוס|עובדיה|יונה|מיכה|נחום|חבקוק|צפניה|חגי|זכריה|מלאכי|תהלים|משלי|איוב|שיר השירים|רות|אסתר|קהלת|איכה|דניאל|עזרא|נחמיה|דברי הימים א|דברי הימים ב) (ק?[ט-צ]?[א-ט]?) (ק?[ט-צ]?[א-ט]?)' -text:'<noinclude>{{ניווט לקטע ברש"י|{{ס:#invoke:String|reverse|{{ס:החלף|{{ס:#invoke:String|reverse|{{ס:החלף|{{ס:שם הדף}}|רש&#34;י על |}}}}| |{{ס:!}}|count=2}}}}}}</noinclude>' -grepnot:'\{\{(ניווט ל)?קטע ברש"י\|' -summary:'{{ניווט לקטע ברש"י}}' -site:wikisource:he -pt:0")
+#run("python pwb.py replace -ref:'תבנית:דף רי"ף' "\{\{דף רי\"ף\|(דף |דף רי\"ף |)([ט-צ]?)\"?([א-ט]?)\'? ע?\"?([אב])\}\}" '{{דף רי"ף|\2\3|\4}}' -regex -site:wikisource:he -pt:0 -summary:'שינוי פורמט ל[[תבנית:דף רי"ף]]'")
+#run("python pwb.py 'creat ben sira psukim'")
+#run("python pwb.py 'creat rif dafs'")
+#run("python pwb.py 'creat rif dafs' -pt:0")
+#run("python pwb.py 'clear rif dafs'")
+#run("python pwb.py 'edit radak psalms'")
+#run("python pwb.py add_text -text:'{{ניווט ספר|שם הספר=שיחות הר"ן|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}\n{{#קטע:שיחות הר"ן/שלם|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}' -links:'שיחות הר"ן' -create -site:wikisource:he")
+#run("python pwb.py replace '|מרחב=קטע:' '' -prefix:'מ"ג'")
+#run("python pwb.py add_text -text:'{{ניווט ספר|שם הספר=השתפכות הנפש|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}\n{{#קטע:השתפכות הנפש/הכל|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}' -links:'משתמש:Shalomori123/קישורים לבוט' -create -site:wikisource:he")
+
