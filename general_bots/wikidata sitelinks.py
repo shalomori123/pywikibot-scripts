@@ -4,13 +4,14 @@ from pywikibot.exceptions import NoPageError
 src = pywikibot.Site('he', 'wikisource')
 pedia = pywikibot.Site('he', 'wikipedia')
 
-for page in src.allpages(start='בן סירב'):
+for page in src.allpages(start='זכריו'):
 	print(page)
 	try:
-		item = pywikibot.ItemPage.fromPage(page)
-		continue
+		pywikibot.ItemPage.fromPage(page)
 	except NoPageError:
 		pass
+	else:
+		continue
 	
 	pedia_page = pywikibot.Page(pedia, page.title())
 	if not pedia_page.exists():
@@ -20,7 +21,14 @@ for page in src.allpages(start='בן סירב'):
 		item = pywikibot.ItemPage.fromPage(pedia_page)
 	except NoPageError:
 		continue
-	print('about to add', page, 'as a sitelink to', item.getID(), 'which is connected to [[w:'+ pedia_page.title()+']]')
+	try:
+		item.getSitelink(src.dbName())
+	except NoPageError:
+		pass
+	else:
+		continue
+	
+	print('about to add', page, 'as a sitelink to', item.getID(), 'which is connected to [[w:' + pedia_page.title() + ']]')
 	if pywikibot.input_yn('do you want to add?', 'n'):
-		item.setSitelink(sitelink={'site': src.dbName(), 'title': page.title()}, summary='Set sitelink hewikisource')
+		item.setSitelink(page, summary='Set sitelink ' + src.dbName())
 		print('added!')
