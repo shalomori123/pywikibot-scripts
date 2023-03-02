@@ -4,7 +4,7 @@ from pywikibot.exceptions import NoPageError
 src = pywikibot.Site('he', 'wikisource')
 pedia = pywikibot.Site('he', 'wikipedia')
 
-for page in src.allpages(start='זכריו'):
+for page in src.allpages(start='חוק גיל'):
 	print(page)
 	try:
 		pywikibot.ItemPage.fromPage(page)
@@ -12,6 +12,13 @@ for page in src.allpages(start='זכריו'):
 		pass
 	else:
 		continue
+	if page.isRedirectPage():
+		try:
+			pywikibot.ItemPage.fromPage(page.getRedirectTarget())
+		except NoPageError:
+			pass
+		else:
+			continue
 	
 	pedia_page = pywikibot.Page(pedia, page.title())
 	if not pedia_page.exists():
