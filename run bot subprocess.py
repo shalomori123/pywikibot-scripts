@@ -18,6 +18,8 @@ site = '-site:wikisource:he'
 pt = '-pt:0'
 all_pages = '-start:!'
 draft = '-page:משתמש:Shalomori123/טיוטה'
+visual_editor = ['<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" ([^>\s].*?)="" />', '<קטע \\1=\\2 \\3/>', '<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" />', '<קטע \\1=\\2/>',
+"'''<קטע התחלה ?= ?([^>\s].*?)/>", "<קטע התחלה=\\1/>'''", "<קטע סוף ?= ?([^>\s].*?)/>'''", "'''<קטע סוף=\\1/>", '-regex', '-summary:תיקון נזקי העורך החזותי לתגי קטע']
 
 
 #init scripts
@@ -30,21 +32,16 @@ draft = '-page:משתמש:Shalomori123/טיוטה'
 #frequent scripts
 #run(call + ['keta tags bot'])
 #run(call + ['empty draft'])
-#run(call + ['redirect', 'double', '-ns:0', '-fullscan'])
+#run(call + ['redirect', 'double', '-fullscan'])
 #run(call + ['redirect', 'both'])
 #run(call + ['test'])
 #run(call + ['split bot'])
 #run(call + [pt, 'wikidata sitelinks'])
 
-#interesting scripts:
-	#revertbot
-	#listpages
-	#category_redirect
-	#movepages
 
 #useful one-time temp
 #run(call + ['keta 3.0', '-page:', '-regex:'])
-#run(call + ['replace', '', '', '-prefixindex:', '-summary:'])
+#run(call + ['replace', '', '', '-regex', '-prefixindex:', '-summary:'])
 #run(call + ['add_text', '-text:{{ניווט ספר|שם הספר=name|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}'
 #'\n{{קטע עם כותרת|big page|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}'
 #'\n[[קטגוריה:name|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}]]',
@@ -54,19 +51,40 @@ draft = '-page:משתמש:Shalomori123/טיוטה'
 #run(call + ['rename bot', '-change:', '-to:', '-prefixindex:', '-summary:שינוי שם למהדורה'])
 #run(call + ['create redirect bot', '-change:', '-to:', '-prefixindex:', '-summary:שינוי שם למהדורה'])
 #run(call + ['delete', '-prefixindex:', main_user, '-summary:נוצר בטעות'])
+#run(call + ['revertbot', main_user, '-username:', '-limit:'])
+#run(call + ['listpages', draft.replace('-page', '-put'), '-format:2'])
 
 
-#in work: (bots that i want to run but need more improve)
-#run(call + ['replace', '<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" />', '<קטע \\1=\\2/>', '<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" ([^>\s].*?)="" />', '<קטע \\1=\\2 \\3/>', "'''<קטע התחלה ?= ?([^>\s].*?)/>", "<קטע התחלה=\\1/>'''", "<קטע סוף ?= ?([^>\s].*?)/>'''", "'''<קטע סוף=\\1/>", '-regex', '-summary:תיקון נזקי העורך החזותי לתגי קטע'])
-#run(call + ['add_text', '-text:\n[[קטגוריה:הפניות מהמרחב הראשי למרחב ביאור]]', '-start:!', '-ns:0', '-grep:# ?הפניה \[\[ביאור:'])
-#run(call + ['replace', '\{\{(מ"מ|ממ)\|([^\}].+)\|ק=\{\{שם הדף\}\}\}\}', '{{הפ|\\2}}', '-regex', '-start:!'])
+#in build: (bots that i want to run but need more improve)
+#run(call + ['add_text', '-text:\n[[קטגוריה:הפניות מהמרחב הראשי למרחב ביאור]]', '-start:!', '-ns:0', '-grep:# ?(הפניה|REDIRECT) \[\[ביאור:'])
+#run(call + ['replace', '\{\{(מ"מ|ממ)\|([^\}].+)\|ק=\{\{שם הדף\}\}\}\}', '{{הפ|\\2}}', '-regex', '-transcludes:מ"מ'])
 
 #one-time scripts (newest first)
 #run(call + [])
 #run(call + [])
 #run(call + [])
-#run(call + [])
-#run(call + [])
+#run(call + ['halacha rambam bot'])
+#run(call + ['replace', '(?<!\n)\n(?!\n)', '\n\n', '-regex', '-prefixindex:טיוטה:'])
+#run(call + ['sources bot', '-prefixindex:טיוטה:'])
+#run(call + ['replace', '(\n)הזנה אוטומטית (.+)', '\\1=\\2=', '-regex', '-prefixindex:טיוטה:'])
+#run(call + ['add_text', '-text:==מפרשים==\n===הגהות רבינו פרץ===\n{{:הגהות רבינו פרץ על סמ"ק/{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}'
+#'\n===הגהות חדשות===\n{{:הגהות חדשות על סמ"ק/{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}'
+#'\n[[קטגוריה:סמ"ק|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}]]',
+#'-prefixindex:סמ"ק/', '-summary:מפרשים'])
+#run(call + ['replace', '^=(.*?)=\n', '{{ניווט ספר|שם הספר=סמ"ק|\\1}}\n', '-regex', '-prefixindex:סמ"ק/', '-summary:ניווט'])
+#run(call + [main_user, 'delete link page'])
+#run(call + ['replace', '(?<!small>)(?<!\{\{קטן\|)(\(...+?\))', '{{קטן|\\1}}', '-regex', '-prefixindex:אור החיים על', '-summary:הקטנת כל סוגריים, לבקשת משתמש:ראובן פרוס'])
+#run(call + ['replace', *visual_editor, '-prefixindex:אור החיים'])
+#run(call + ['replace', '\n<noinclude>[[קטגוריה: אלון בכות: א]]</noinclude>', '', '-cat:אלון בכות: א'])
+#run(call + ['replace', '[[קטגוריה:להסב להפניות זמני]]', '', '-cat:להסב להפניות זמני'])
+#run(call + ['replace', *visual_editor, '-usercontribs:ראובן פרוס')
+#run(call + ['add_text', '-text:{{הבהרה ספר המילים}}', '-cat:ספר המילים של שבי"ל', '-up', user])
+#run(call + ['delete', '-prefixindex:ביאור הגר"א על אורח חיים/', main_user, '-summary:על פי דף [[שיחה:ביאור הגר"א על אורח חיים/יא|השיחה]]'])
+#run(call + ['delete', '-prefixindex:גור אריה', '-titleregex:^גור אריה .*\d$', main_user, '-summary:מיותר, ערכו אולי כתיעוד'])
+#run(call + ['replace', '<קטע (התחלה|סוף) ?= ?שו"ע ', '<קטע \\1=', '-prefixindex:שולחן ערוך', '-regex', '-summary:אחידות תגי קטע'])
+#run(call + ['rename bot', '-change:^(.{3,12})(?!\(רחל\))$', '-to:\\1 (רחל)', '-regex', '-catr:קט:שירי רחל', '-summary:הוספת שם המשורר בשם הדף'])
+#run(call + ['rename bot', '-change:^(.{3,12})(?!\(ביאליק\))$', '-to:\\1 (ביאליק)', '-regex', '-catr:קט:שירי חיים נחמן ביאליק', '-summary:הוספת שם המשורר בשם הדף'])
+#run(call + ['rename bot', '-change:^(.{3,12})$', '-to:\\1 (אורי ניסן גנסין)', '-regex', '-cat:קט:אורי ניסן גנסין', '-summary:שינוי שם למהדורה'])
 #run(call + ['rename bot', '-change:אלון בכות על איכה', '-to:אלון בכות (אייבשיץ) על איכה', '-prefixindex:אלון בכות על איכה', '-summary:שינוי שם למהדורה'])
 #run(call + ['replace', '(ספרי הרמב"ם.*)', '\n==\\1==', '-regex', '-prefixindex:אגרות הרמב"ם/'])
 #run(call + ['replace', "''", '"', '\n', '\n\n', '-prefixindex:אגרות הרמב"ם/'])
@@ -291,4 +309,3 @@ draft = '-page:משתמש:Shalomori123/טיוטה'
 #run("python pwb.py add_text -text:'{{ניווט ספר|שם הספר=שיחות הר"ן|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}\n{{#קטע:שיחות הר"ן/שלם|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}' -links:'שיחות הר"ן' -create -site:wikisource:he")
 #run("python pwb.py replace '|מרחב=קטע:' '' -prefix:'מ"ג'")
 #run("python pwb.py add_text -text:'{{ניווט ספר|שם הספר=השתפכות הנפש|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}\n{{#קטע:השתפכות הנפש/הכל|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}' -links:'משתמש:Shalomori123/קישורים לבוט' -create -site:wikisource:he")
-

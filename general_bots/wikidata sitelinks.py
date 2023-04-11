@@ -4,7 +4,7 @@ from pywikibot.exceptions import NoPageError
 src = pywikibot.Site('he', 'wikisource')
 pedia = pywikibot.Site('he', 'wikipedia')
 
-for page in src.allpages(start='מות'):
+for page in src.allpages(start='משנה ב'):
 	print(page)
 	try:
 		pywikibot.ItemPage.fromPage(page)

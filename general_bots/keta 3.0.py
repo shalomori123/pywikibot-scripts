@@ -61,8 +61,8 @@ class KetaTagsBot(SingleSiteBot, ExistingPageBot):
 		if not self.opt.summary:
 			self.opt.summary = 'הוספת תגי קטע'
 		if not self.opt.regex and not self.opt.titles:
-			raise ValueError("The bot must get '-regex:X' or '-titles' param, \
-			to parse the page sections by.")
+			raise ValueError("The bot must get '-regex:X' or '-titles' param, "
+			"to parse the page sections by.")
 	
 	
 	def remove_empty_sections(self, page):
@@ -74,10 +74,10 @@ class KetaTagsBot(SingleSiteBot, ExistingPageBot):
 		#can be replaced by: (but not working)
 		#cctk = CosmeticChangesToolkit(page)
 		#text = cctk.removeEmptySections(page.text)
-		while re.search('===.*?===\s+?===?[^=]', text):
-			text = re.sub('===.*?===\s+?(===?[^=])', '\\1', text)
-		while re.search('==.*?==\s+?==[^=]', text):
-			text = re.sub('==.*?==\s+?(==[^=])', '\\1', text)
+		while re.search('===.+?===\s+?===?[^=]', text):
+			text = re.sub('===.+?===\s+?(===?[^=])', '\\1', text)
+		while re.search('==.+?==\s+?==[^=]', text):
+			text = re.sub('==.+?==\s+?(==[^=])', '\\1', text)
 		
 		if text != oldtext:
 			self.opt.summary = 'הסרת פסקאות ריקות, ' +self.opt.summary
