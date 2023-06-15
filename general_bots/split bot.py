@@ -93,7 +93,29 @@ class SplitBot(SingleSiteBot, CurrentPageBot):
                 r' *(?:<!--[\s\S]*?--> *)*(?=\n|\Z)')
     
     def parse_page(self):
-        pass
+        """Parse the current page by titles or by given regex.
+        
+        :return: dict of subpages, which every value is textlib._Section
+        which contain 'title' and 'content' attributes."""
+        textlib._create_default_regexes()
+        if self.opt.titles:
+            titles = self.header_regex(self.opt.max_order)
+        else:
+            titles = re.compile(self.opt.regex)
+
+        textlib._regex_cache['header'] = titles
+        sections = textlib.extract_sections(self.current_page.text, self.site)
+
+        pages = {}
+        for sec in sections.sections:
+            if self.opt.titles:
+                part = sec.title.strip().strip('=').strip()
+            else:
+                groups = self.opt.group.split(',')
+                groups = '\\' + ' \\'.join(groups)
+                part = re.sub(self.opt.regex, groups, sec.title)
+            pages[part] = sec
+        return pages
     
     def treat_page(self) -> None:
         sections = self.parse_page()
