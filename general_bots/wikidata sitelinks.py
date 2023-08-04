@@ -4,7 +4,7 @@ from pywikibot.exceptions import NoPageError
 src = pywikibot.Site('he', 'wikisource')
 pedia = pywikibot.Site('he', 'wikipedia')
 
-for page in src.allpages(start='משנה ב'):
+for page in src.allpages(start='נחונ'):
 	print(page)
 	try:
 		pywikibot.ItemPage.fromPage(page)
@@ -42,3 +42,6 @@ for page in src.allpages(start='משנה ב'):
 	if pywikibot.input_yn('do you want to add?', 'n'):
 		item.setSitelink(page, summary='Set sitelink ' + src.dbName())
 		print('added!')
+	else:
+		with open("dont_add_wikidata.csv", "a") as f:
+			f.write("'"+page.title()+"',")
