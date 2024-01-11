@@ -16,53 +16,13 @@ DEFAULT_ARGS = {
     'minor': False,
 }
 
-#pagename = 'משתמש:Shalomori123/טיוטה'
-#pagename = 'שו"ת רדב"ז/חלק ד'
-#pagename = 'אור חדש/6'
-#pagename = 'הגהות רבי עקיבא איגר/יורה דעה'
-#pagename= 'גור אריה על בראשית/9'
-#pagename= 'גור אריה על שמות/8'
-#pagename= 'גור אריה על ויקרא/6'
-#pagename= 'גור אריה על במדבר/5'
-#pagename= 'גור אריה על דברים/4'
-#pagename = 'טיוטה:סמ"ק'
-#pagename = 'טיוטה:הגהות רבינו פרץ'
-
-#max_order = 2
-#notitle = True
-#basename = 'הגהות רבינו פרץ על סמ"ק/'
-#if not basename:
-#    basename = pagename + '/'
-#summary = 'בוט פיצול: פוצל מתוך דף [[' + pagename + ']]'
-
-#site = pywikibot.Site()
-#page = pywikibot.Page(site, pagename)
-#textlib._create_default_regexes()
-#textlib._regex_cache['header'] = header_regex(max_order)
-#sections = textlib.extract_sections(page.text, site)
-#links = []
-#for sec in sections.sections:
-#    part = sec.title.strip().strip('=').strip()
-#    new_name = basename + part
-#    sec_page = pywikibot.Page(site, new_name)
-#    new_text = ('' if notitle else sec.title) + sec.content
-#    #if not sec_page.exists():
-#    sec_page.text = textlib.add_text(sec_page.text, new_text, site=site)
-#    sec_page.save(summary)
-#    links.append('[[' + new_name + '|' + part + ']]')
-
-#print(links)
-#toc = '==תוכן הספר==\n* ' + '\n* '.join(links)
-#page.text = sections.header + toc + sections.footer
-#page.save('בוט פיצול: הדף פוצל לדפי משנה')
-#print('completed!')
 
 class SubpagesBot(SingleSiteBot):
     """Subbot to create the subpages."""
     def __init__(self, parent, base_name, sections, no_title=False):
     	self.summary = 'בוט פיצול: פוצל מתוך דף ' + parent.title(as_link=True)
     	self.links = []
-    	pages = [base_name + part for part in sections.keys()]
+    	pages = [base_name + part for part in sections]
     	self.generator = pagegenerators.PagesFromTitlesGenerator(pages)
     	self.base_name = base_name
     	self.no_title = no_title
@@ -131,6 +91,11 @@ class SplitBot(SingleSiteBot, CurrentPageBot):
                 groups = self.opt.group.split(',')
                 groups = '\\' + ' \\'.join(groups)
                 part = re.sub(self.opt.regex, groups, sec.title)
+                
+            i = 2
+            while part in pages:
+            	part = part + str(i)
+            	i += 1
             pages[part] = sec
         return sections.header, pages, sections.footer
     
