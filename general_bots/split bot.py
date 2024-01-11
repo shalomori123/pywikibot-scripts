@@ -6,43 +6,43 @@ from pywikibot.bot import SingleSiteBot, CurrentPageBot, input_yn
 
 
 DEFAULT_ARGS = {
-    'base_name': '',
-    'titles': False,
-    'max_order': 5,
-    'regex': '',
-    'group': '1',
-    'noinclude_titles': False,
-    'always': False,
-    'minor': False,
+    'base_name': '', # The prefix in the titles of the new pages, default is the parent page name
+    'titles': False, # The bot will work automatically according to the titles of the parent page
+    'max_order': 5, # which titles order to split
+    'regex': '', # parse the page manually with regex
+    'group': '1', # which groups in the regex to use in the new name (seperated by comma, in the result it return spaces between)
+    'notitle': False, # don't move the title itself to the new page
+    'always': False, # to confirm all the edits
+    'minor': False, # consider as a minor edit
 }
 
 
 class SubpagesBot(SingleSiteBot):
     """Subbot to create the subpages."""
-    def __init__(self, parent, base_name, sections, no_title=False):
-    	self.summary = 'בוט פיצול: פוצל מתוך דף ' + parent.title(as_link=True)
-    	self.links = []
-    	pages = [base_name + part for part in sections]
-    	self.generator = pagegenerators.PagesFromTitlesGenerator(pages)
-    	self.base_name = base_name
-    	self.no_title = no_title
+    def __init__(self, parent, base_name, sections, notitle=False):
+    	self.notitle = notitle
     	self.sections = sections
+    	self.titles = {base_name + part.rstrip(): part for part in sections}
+    	self.generator = pagegenerators.PagesFromTitlesGenerator(self.titles.keys())
+    	self.summary = 'בוט פיצול: פוצל מתוך דף ' + parent.title(as_link=True)
+    	self.created = []
     	super().__init__()
     
     def treat(self, page):
-    	part = page.title().replace(self.base_name, '')
+    	part = self.titles[page.title()]
     	sec = self.sections[part]
-    	new_text = ('' if self.no_title else sec.title) + sec.content
+    	new_text = ('' if self.notitle else sec.title) + sec.content
     	page.text = textlib.add_text(page.text, new_text, site=page.site)
     	page.save(self.summary)
-    	self.links.append('[[' + page.title() + '|' + part + ']]')
+    	self.created.append('[[' + page.title() + '|' + part + ']]')
     	
 
 class SplitBot(SingleSiteBot, CurrentPageBot):
     """Implement the split of page to its paragraphs (or by regex)."""
-    def __init__(self, **kwargs):
-        super().__init__(generator=kwargs['gen'])
-        self.opt.update(kwargs)
+    def __init__(self, generator, **opt):
+        self.generator = generator
+        super().__init__()
+        self.opt.update(opt)
         
         self.opt.summary = 'בוט פיצול: הדף פוצל לדפי משנה'
         if not self.opt.regex and not self.opt.titles:
@@ -52,13 +52,13 @@ class SplitBot(SingleSiteBot, CurrentPageBot):
         if self.opt.base_name:
             self.base_name = self.opt.base_name
         else:
-            ask = input_yn("No '-base_name:' parameter. Do you want to use "
-                           "the big page name as the base name of subpages?", 
+            ask = input_yn("No '-base_name:X' parameter. Do you want to use "
+                           "the parent page name as a base name of the new pages?", 
                            default=False)
             if ask:
                 self.__class__.base_name = property(lambda self: self.current_page.title() + '/')
             else:
-                raise ValueError("No '-base_name:' parameter.")
+                raise ValueError("No '-base_name:X' parameter.")
 
     def header_regex(self, max_order=5):
         equals = '='
@@ -102,9 +102,9 @@ class SplitBot(SingleSiteBot, CurrentPageBot):
     def treat_page(self) -> None:
         header, sections, footer = self.parse_page()
         sub_bot = SubpagesBot(parent=self.current_page, base_name=self.base_name,
-                          sections=sections, no_title=self.opt.noinclude_titles)
+                          sections=sections, notitle=self.opt.notitle)
         sub_bot.run()
-        toc = '==תוכן הספר==\n* ' + '\n* '.join(sub_bot.links)
+        toc = '==תוכן הספר==\n* ' + '\n* '.join(sub_bot.created)
         self.current_page.text = header + toc + footer
         self.current_page.save(self.opt.summary)
 
@@ -133,14 +133,14 @@ def main(*args: str) -> None:
             options[option] = value
         elif option == 'max_order':
             options[option] = int(value)
-        elif option in ('titles', 'noinclude_titles', 'always', 'minor'):
+        elif option in ('titles', 'notitle', 'always', 'minor'):
             options[option] = True
         elif option == 'major':
             options['minor'] = False
         else:
             raise ValueError(f'"{arg}" is invalid arg.')
     
-    bot = SplitBot(gen=gen, **options)
+    bot = SplitBot(generator=gen, **options)
     bot.run()
 
 if __name__ == '__main__':
