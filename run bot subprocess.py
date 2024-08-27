@@ -15,6 +15,7 @@ call = ['python', 'pwb.py']
 user = '-user:ShalomOrobot'
 main_user = '-user:shalomori123'
 site = '-site:wikisource:he'
+pedia = '-site:wikipedia:he'
 pt = '-pt:0'
 all_pages = '-start:!'
 draft = '-page:משתמש:Shalomori123/טיוטה'
@@ -35,24 +36,23 @@ visual_editor = ['<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" ([^>\s].*?)="" /
 #run(call + ['redirect', 'double', '-fullscan'])
 #run(call + ['redirect', 'both'])
 #run(call + ['test'])
-#run(call + ['split bot'])
 #run(call + [pt, 'wikidata sitelinks'])
-#run(call + ['replace', *visual_editor, '-usercontribs:ראובן פרוס'])
+#run(call + ['replace', *visual_editor, '-usercontribs:יוסף אומץ'])
 
 
 #useful one-time temp
-#run(call + ['keta 3.0', '-page:', '-regex:'])
 #run(call + ['replace', '', '', '-regex', '-prefixindex:', '-summary:'])
+#run(call + ['keta 3.0', '-page:', '-regex:'])
+#run(call + ['sources bot', '-prefixindex:'])
+#run(call + ['touch', '-transcludes:temp'])
+#run(call + ['rename bot', '-change:', '-to:', '-regex', '-prefixindex:', '-summary:שינוי שם למהדורה'])
+#run(call + ['create redirect bot', '-change:', '-to:', '-prefixindex:', '-summary:יצירת הפניות מצורה לצורה'])
+#run(call + ['split bot', '-titles', '-max_order:1', '-notitle', '-base_name:/', '-prefixindex:'])
+#run(call + ['delete', '-prefixindex:', main_user, '-summary:נוצר בטעות'])
 #run(call + ['add_text', '-text:{{ניווט ספר|שם הספר=name|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}'
 #'\n{{קטע עם כותרת|big page|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}}}'
 #'\n[[קטגוריה:name|{{ס:#titleparts:{{ס:שם הדף}}|1|2}}]]',
 #'-links:name', '-titleregexnot:big page', '-create', '-up', '-summary:הכללה מהדף הכולל', pt])
-#run(call + ['sources bot', '-prefixindex:'])
-#run(call + ['touch', '-transcludes:temp'])
-#run(call + ['rename bot', '-change:', '-to:', '-prefixindex:', '-summary:שינוי שם למהדורה'])
-#run(call + ['create redirect bot', '-change:', '-to:', '-prefixindex:', '-summary:יצירת הפניות מצורה לצורה'])
-#run(call + ['split bot', '-titles', '-max_order:1', '-noinclude_titles', '-base_name:/', '-prefixindex:'])
-#run(call + ['delete', '-prefixindex:', main_user, '-summary:נוצר בטעות'])
 #run(call + ['revertbot', main_user, '-username:', '-limit:'])
 #run(call + ['listpages', draft.replace('-page', '-put'), '-format:2', '-overwrite'])
 
@@ -64,7 +64,57 @@ visual_editor = ['<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" ([^>\s].*?)="" /
 #one-time scripts (newest first)
 #run(call + [])
 #run(call + [])
-#run(call + ['delete', '-prefixindex:עלים לתרופה (ברסלב) חלק', main_user, '-summary:נוצר בפורמט אחר'])
+#run(call + ['delete', '-prefixindex:T314733/NS101:', main_user, '-summary:שאריות מרחב שיחת קטע'])
+#run(call + ['delete', '-prefixindex:T314733/NS100:', main_user, '-summary:שאריות מרחב קטע שגרמו לשגיאות רבות'])
+#run(call + ['keta 3.0', '-prefixindex:תוספות הרא"ש על הש"ס/ברכות/', "-regex:(?:==.+?==\s+?)?===\s*\[\[ברכות_(.+?)_(.+?)\|?.*?\]\]\s*===\s+?V?\s*?.*?ראה כאן\]'''", '-group:1,2'])
+#run(call + ['replace', '<i data-commentator="([a-zA-Z]+?)" data-order=""></i>', '{{פרשן טור|\\1}}', '-regex', '-summary:המרת תגיות ספריא לתבנית ריקה, למניעת מחיקה שלהם', '-cat:ארבעה טורים'])
+#run(call + ['replace', '<ref>{{סרוגים|[[רינת קרמר יבלינוביץ]]|תרימו לי להיט: אלו השירים המושמעים ביותר הקיץ|835994-תרימו-לי-להיט-אלו-השירים-המושמעים-ביות|י"ד באלול תשפג}}</ref>', '{{הערה|{{סרוגים|רינת קרמר יבלינוביץ|תרימו לי להיט: אלו השירים המושמעים ביותר הקיץ|835994-תרימו-לי-להיט-אלו-השירים-המושמעים-ביות|31 באוגוסט 2023}}}}', '-ref:רינת קרמר יבלינוביץ', pedia, main_user])
+#run(call + ['mikra_temps', '-cat:מקרא על פי המסורה', '-titleregex:/טעמים', '-summary:עריכת תבניות ופרמטרים לצורך תצוגת הערות הנוסח'])
+#run(call + ['replace', '{{דף היסטורי משתמש|עזרא|עזרא ', '{{דף היסטורי משתמש|עזרא|', '{{דף היסטורי משתמש|עזרא|נחמיה ', '{{דף היסטורי משתמש|נחמיה|',
+#'-prefixindex:משתמש:Dovi/נביאים וכתובים על פי המסורה/', '-summary:תיקון [[תבנית:דף היסטורי משתמש]]'])
+#run(call + ['replace', '\{\{דף היסטורי משתמש\|תרי עשר\|([א-ת]+?) ', '{{דף היסטורי משתמש|\\1|', '-regex',
+#'-prefixindex:משתמש:Dovi/נביאים וכתובים על פי המסורה/', '-summary:תיקון [[תבנית:דף היסטורי משתמש]]'])
+#run(call + ['replace', '{{דף היסטורי משתמש|שמואל|שמ"א ', '{{דף היסטורי משתמש|שמואל א|', '{{דף היסטורי משתמש|שמואל|שמ"ב ', '{{דף היסטורי משתמש|שמואל ב|', 
+#'{{דף היסטורי משתמש|מלכים|מל"א ', '{{דף היסטורי משתמש|מלכים א|', '{{דף היסטורי משתמש|מלכים|מל"ב ', '{{דף היסטורי משתמש|מלכים ב|', 
+#'{{דף היסטורי משתמש|דברי הימים|דה"א ', '{{דף היסטורי משתמש|דברי הימים א|', '{{דף היסטורי משתמש|דברי הימים|דה"ב ', '{{דף היסטורי משתמש|דברי הימים ב|', 
+#'-prefixindex:משתמש:Dovi/נביאים וכתובים על פי המסורה/', '-summary:תיקון [[תבנית:דף היסטורי משתמש]]'])
+#run(call + ['replace', '(\{\{דף היסטורי משתמש\|)(בראשית|שמות|ויקרא|במדבר|דברים|נח|וארא|צו|נשא|ואתחנן|לך לך|בא|שמיני|בהעלתך|עקב|וירא|בשלח|תזריע|שלח|ראה|חיי שרה|יתרו|מצרע|קרח|שפטים|תולדת|משפטים|אחרי מות|חקת|כי תצא|ויצא|תרומה|קדשים|בלק|כי תבוא|וישלח|תצוה|אמר|פינחס|נצבים|וישב|כי תשא|בהר|מטות|וילך|מקץ|ויקהל|בחקתי|מסעי|האזינו|ויגש|פקודי|וזאת הברכה|ויחי)\}\}', '\\1פרשת|\\2}}',
+#'-prefixindex:משתמש:Dovi/תורה על פי המסורה/', '-regex', '-summary:תיקון [[תבנית:דף היסטורי משתמש]]', pt])
+#run(call + ['add_text', '-text:{{דף היסטורי משתמש|{{ס:החלף|{{ס:החלף|{{ס:החלף|{{ס:#titleparts:{{ס:שם הדף}}|4|3}}|ספר |}}|מגילת |}}|/|{{ס:!}}}}}}',
+#'-prefixindex:משתמש:Dovi/נביאים וכתובים על פי המסורה/', '-up', '-summary:[[תבנית:דף היסטורי משתמש]]', pt])
+#run(call + ['add_text', '-text:{{דף היסטורי משתמש|{{ס:החלף|{{ס:החלף|{{ס:החלף|{{ס:#titleparts:{{ס:שם הדף}}|4|3}}|ספר |}}|מגילת |}}|/|{{ס:!}}}}}}',
+#'-prefixindex:משתמש:Dovi/תורה על פי המסורה/', '-up', '-summary:[[תבנית:דף היסטורי משתמש]]', pt])
+#run(call + ['replace', '(?<![א-ת])מ"מ', 'מכל מקום', '(?<![א-ת])ואז"ל', 'ואמרו ז"ל', '(?<![א-ת])ד"ת', 'דברי־תורה', '(?<![א-ת])ע"ש', 'עיין שם', '-regex', '-prefixindex:צדקת הצדיק/', '-summary:החלפות לבקשת משתמש:יוסף אומץ'])
+#run(call + ['replace', '(?<!small>)(?<!\{\{קטן\|)(\(...+?\))', '{{קטן|\\1}}', '(?<![א-ת])ג"כ', 'גם כן', '(?<![א-ת])עי"ז', 'על־ידי־זה', '(?<![א-ת])ע"י', 'על־ידי', '(?<![א-ת])הש"י', 'השם יתברך', '(?<![א-ת])אח"כ', 'אחר־כך', '-regex', '-prefixindex:צדקת הצדיק/', '-summary:החלפות לבקשת משתמש:יוסף אומץ'])
+#for book in ('בראשית', 'שמות', 'ויקרא', 'במדבר', 'דברים'):
+#	for letter in ('א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט',
+#'י', 'יא', 'יב', 'יג', 'יד', 'טו', 'טז', 'יז', 'יח', 'יט',
+#'כ', 'כא', 'כב', 'כג', 'כד', 'כה', 'כו', 'כז', 'כח', 'כט',
+#'ל', 'לא', 'לב', 'לג', 'לד', 'לה', 'לו', 'לז', 'לח', 'לט',
+#'מ', 'מא', 'מב', 'מג', 'מד', 'מה', 'מו', 'מז', 'מח', 'מט', 'נ'):
+#		run(call + ['add_text', '-text:{{מפרשי רש"י|{{ס:החלף|{{ס:החלף|{{ס:שם הדף}}|מפרשי רש&#34;י על |}}| |{{ס:!}}}}}}', '-links:יריעות שלמה על רש"י/'+book+'/'+letter, '-titleregex:מפרשי רש"י', '-createonly', '-always'])
+#run(call + ['replace', '== ?([ט-צ]|[ט-צ]?[א-ט]) ?==', '==[[מפרשי רש"י על {{ס:#titleparts:{{ס:שם הדף}}|1|2}} {{ס:#titleparts:{{ס:שם הדף}}|1|3}} \\1|פסוק \\1]]==', '-regex', '-prefixindex:יריעות שלמה על רש"י/', '-summary:קישור למפרשי רש"י מהכותרת'])
+#run(call + ['add_text', '-text:{{ניווט3}}', '-prefixindex:נתיבות המשפט/חידושים/', '-up'])
+#run(call + ['sources bot', '-page:דרך עץ חיים'])
+#run(call + ['replace', '(==סימן ?)\n(.+?==)', '\\1\\2', '==סימן\s*\Z', '', '-regex', '-prefixindex:חזון איש/אורח חיים/'])
+#run(call + ['replace', '\n ', '\n', '(?<!\n)\n(?!\n)', '\n\n', '(?<=\n)סימן (.{1,4}(?:\(.+?\)))?\n', '==סימן \\1==\n', '-regex', '-prefixindex:משתמש:עורך מתחיל/חזון איש אורח חיים', '-summary:הכפלת רווחי שורות'])
+#run(call + ['replace', '(?<=\n)([א-ת]{1,4}\))?([^=\n]{1,18}[^\.])\n\n', "\\1'''\\2'''", '-regex', '-prefixindex:משתמש:עורך מתחיל/חזון איש אורח חיים', '-summary:הדגשת מילה ראשונה'])
+#run(call + ['split bot', '-regex:==סימן ([א-ת]*).*?==', '-base_name:חזון איש/אורח חיים/', '-prefixindex:משתמש:עורך מתחיל/חזון איש אורח חיים'])
+#run(call + ['add_text', '-text:{{ניווט3}}', '-prefixindex:חזון איש/אורח חיים/', '-up'])
+#run(call + ['add_text', '-text:{{ניווט3}}', '-prefixindex:חזון איש/יורה דעה/', '-up'])
+#run(call + ['split bot', '-regex:==סימן ([א-ת]*).*?==', '-base_name:חזון איש/יורה דעה/', '-prefixindex:משתמש:עורך מתחיל/חזון איש יורה דעה'])
+#run(call + ['delete', '-links:הלכות שמיטה', '-ns:0', main_user, '-summary:חשד להז"י'])
+#run(call + ['rename bot', '-change:חפץ חיים - ', '-to:חפץ חיים/', '-prefixindex:חפץ חיים - ', '-summary:העברה לפורמט דפי משנה', user])
+#run(call + ['replace', '{{סרגל ניווט|', '{{סרגל ניווט|הצג תמיד=1|', '-prefixindex:חפץ חיים', '-summary:ניווט'])
+#run(call + ['rename bot', '-change:חפץ חיים - (הלכות לשון הרע|הלכות רכילות) ', '-to:חפץ חיים/\\1/','-regex', '-prefixindex:חפץ חיים - הלכות', '-summary:העברה לפורמט דפי משנה', user])
+#run(call + ['delete', '-prefixindex:הלכות רכילות ציור ', main_user, '-summary:הועבר ל[[חפץ חיים - ציורים|דף ראשי]]'])
+#run(call + ['replace', '(?<=\n)([א-ת]{1,4}\))?([^=\n]{1,18}[^\.])\n\n', "\\1'''\\2'''", '-regex', '-prefixindex:משתמש:עורך מתחיל/חזון איש', '-summary:הדגשת מילה ראשונה', site])
+#run(call + ['replace', '(?<!\n)\n(?!\n)', '\n\n', '(?<=\n)סימן (.{0,4})\n', '==סימן \\1==\n', '-regex', '-prefixindex:משתמש:עורך מתחיל/חזון איש', '-summary:הכפלת רווחי שורות', site])
+#run(call + ['replace', '\n', '\n\n', '-prefixindex:אמונה ובטחון/', '-summary:הכפלת רווחים בין השורות'])
+#run(call + ['create mg perek'])
+#run(call + ['replace', '==[[ירושלמי נדה', '==[[ירושלמי נידה', '-prefixindex:ביאור:ירושלמי מאיר/מסכת נידה', '-summary:נדה ← נידה'])
+#run(call + ['replace', '{{סוף}}', '{{מיספור עברי-סוף}}', '-transcludes:מיספור עברי', '-summary:החלפת תבנית'])
+##run(call + ['delete', '-prefixindex:עלים לתרופה (ברסלב) חלק', main_user, '-summary:נוצר בפורמט אחר'])
 #run(call + ['split bot', '-titles', '-max_order:1', '-noinclude_titles', '-page:עלים לתרופה'])
 #run(call + ['split bot', '-titles', '-max_order:1', '-noinclude_titles', '-base_name:עלים לתרופה/', '-page:עלים לתרופה (המשך)'])
 #run(call + ['replace', "==מִכְתָּבִים דִּשְׁנַת ה' אֲלָפִים ([^ס]*?)==", '=\\1=\n\g<0>', '-regex', '-page:עלים לתרופה (המשך)', '-summary:כותרות'])
