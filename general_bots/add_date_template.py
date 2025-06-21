@@ -1,10 +1,10 @@
-import mwparserfromhell as mwparser
+import mwparserfromhell
 import pywikibot
 from pywikibot.bot import SingleSiteBot, ExistingPageBot
 from pywikibot import pagegenerators, textlib
 
 
-def adding_temp_rev(page, temp_name):
+def adding_temp_revision(page, temp_name):
 	prev_rev = page.latest_revision
 	for rev in page.revisions(content=True):
 		text = rev.text
@@ -22,7 +22,7 @@ class AddDateBot(SingleSiteBot, ExistingPageBot):
 		self.opt.update(kwargs)
 		
 	def treat_page(self):
-		rev = adding_temp_rev(self.current_page, self.opt.temp_name)
+		rev = adding_temp_revision(self.current_page, self.opt.temp_name)
 		date = rev.timestamp.strftime("%d.%m.%Y")
 		
 		if self.opt.warning:
@@ -55,11 +55,10 @@ class AddDateBot(SingleSiteBot, ExistingPageBot):
 		for template in code.filter_templates():
 			if template.name.matches(self.opt.temp_name) and not template.has("תאריך"):
 				template.add("תאריך", date)
-				template.name = str(template.name) + "עם זמן"
+				template.name = self.opt.temp_name + " עם זמן"
 		new_text = str(code)
 		
-		self.current_page.text = new_text
-		self.current_page.save(summary=f"הוספת תאריך לתבנית {{{self.opt.temp_name}}}")
+		self.put_current(new_text, force=True, summary=f"הוספת תאריך לתבנית {{{{{self.opt.temp_name}}}}}")
 
 		
 def main(*args: str) -> None:
@@ -78,7 +77,7 @@ def main(*args: str) -> None:
     	pywikibot.bot.suggest_help(missing_generator=True)
     	return
     
-    options = {}
+    options = {"warning": False}
     for arg in local_args:
         arg, sep, value = arg.partition(':')
         option = arg[1:]
