@@ -17,29 +17,42 @@ site = pywikibot.Site()
 #temp = pywikibot.Page(site, 'תבנית:מ"מ')
 #i = 0
 #for page in temp.getReferences(only_template_inclusion=True):
-#	if '|הק=' in page.text:
-#		print(page.title())
-#	if i > 1000:
-#		print('1000')
-#		i=0
-#	i += 1
+#    if '|הק=' in page.text:
+#        print(page.title())
+#    if i > 1000:
+#        print('1000')
+#        i=0
+#    i += 1
 
 
 #temp = pywikibot.Page(site, 'תבנית:דף של מדרש')
 #gen = temp.getReferences(only_template_inclusion=True)
 #dicto = {}
 #for page in gen:
-#	reg = re.search('\|פיסקאות=(\d{1,3})[\}\|]', page.text)
-#	if reg is not None:
-#		dicto[page.title()] = reg.group(1)
+#    reg = re.search('\|פיסקאות=(\d{1,3})[\}\|]', page.text)
+#    if reg is not None:
+#        dicto[page.title()] = reg.group(1)
 #print(dict(sorted(dicto.items())))
 
 
-ALEPHBET = ('ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט',
-'י', 'יא', 'יב', 'יג', 'יד', 'טו', 'טז', 'יז', 'יח', 'יט',
-'כ', 'כא', 'כב', 'כג', 'כד', 'כה', 'כו', 'כז', 'כח', 'כט',
-'ל', 'לא', 'לב', 'לג', 'לד')
-for i in ALEPHBET:
-	page = pywikibot.Page(site, 'תרגום ירושלמי (קטעים)/ספר דברים/'+i)
-	page.text = re.sub('<קטע (התחלה|סוף)=', '\\g<0>'+i+' ', page.text)
-	page.save()
+#ALEPHBET = ('ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט',
+#'י', 'יא', 'יב', 'יג', 'יד', 'טו', 'טז', 'יז', 'יח', 'יט',
+#'כ', 'כא', 'כב', 'כג', 'כד', 'כה', 'כו', 'כז', 'כח', 'כט',
+#'ל', 'לא', 'לב', 'לג', 'לד')
+#for i in ALEPHBET:
+#    page = pywikibot.Page(site, 'תרגום ירושלמי (קטעים)/ספר דברים/'+i)
+#    page.text = re.sub('<קטע (התחלה|סוף)=', '\\g<0>'+i+' ', page.text)
+#    page.save()
+
+from pywikibot.pagegenerators import PrefixingPageGenerator
+cats = set()
+for page in PrefixingPageGenerator(prefix='ביאור:ירושלמי מאיר/', site=site):
+    page.save()
+    new = page.categories()
+    for cat in new: 
+        tit = cat.title().replace('קטגוריה:', '')
+        if tit.startswith('1') or tit.startswith('2'):
+            cats.add(tit)
+    print(cats)
+with open('cats.txt', 'w') as f:
+    f.write(str(cats))

@@ -33,49 +33,49 @@ DEFAULT_ARGS = {
 
 
 class CreateRedirectsBot(SingleSiteBot, ExistingPageBot):
-	def __init__(self, **kwargs):
-		self.use_redirects = False
-		
-		super().__init__(generator=kwargs['gen'])
-		self.opt.update(kwargs)
-		
-		if not self.opt.change or not self.opt.to or self.opt.change == self.opt.to:
-			raise ValueError("The bot must get '-change:X' and '-to:X' params, "
-			"to move the pages by.")
-		if not self.opt.summary:
-			self.opt.summary = input('insert a summary: ')
-		
-	def newname(self, page):
-		if self.opt.regex:
-			title = re.sub(self.opt.change, self.opt.to, page.title())
-		else:
-			title = page.title().replace(self.opt.change, self.opt.to)
-		return title
-		
-	def treat(self, page):
-		new_title = self.newname(page)
-		if new_title == page.title():
-			pywikibot.output('Skipping page {}, redirect name is the same.'.format(page))
-			self.counter['skip'] += 1
-			return
-		
-		redir = pywikibot.Page(page.site, new_title)
-		
-		if redir.exists():
-			pywikibot.output('Skipping page {}, page [[{}]] already exists!'.format(page, new_title))
-			self.counter['exists'] += 1
-			return
-		
-		print('\nAbout to create redirect:')
-		pywikibot.showDiff(page.title(), new_title)
-		if not self.user_confirm('Do you want to create this redirect?'):
-			pywikibot.output('Skipping page {}'.format(page))
-			self.counter['skip'] += 1
-			return
-		
-		redir.text = '#הפניה [[' + page.title() + ']]'
-		redir.save(summary=self.opt.summary)
-		self.counter['create'] += 1
+    def __init__(self, **kwargs):
+        self.use_redirects = False
+        
+        super().__init__(generator=kwargs['gen'])
+        self.opt.update(kwargs)
+        
+        if not self.opt.change or not self.opt.to or self.opt.change == self.opt.to:
+            raise ValueError("The bot must get '-change:X' and '-to:X' params, "
+            "to move the pages by.")
+        if not self.opt.summary:
+            self.opt.summary = input('insert a summary: ')
+        
+    def newname(self, page):
+        if self.opt.regex:
+            title = re.sub(self.opt.change, self.opt.to, page.title())
+        else:
+            title = page.title().replace(self.opt.change, self.opt.to)
+        return title
+        
+    def treat(self, page):
+        new_title = self.newname(page)
+        if new_title == page.title():
+            pywikibot.output('Skipping page {}, redirect name is the same.'.format(page))
+            self.counter['skip'] += 1
+            return
+        
+        redir = pywikibot.Page(page.site, new_title)
+        
+        if redir.exists():
+            pywikibot.output('Skipping page {}, page [[{}]] already exists!'.format(page, new_title))
+            self.counter['exists'] += 1
+            return
+        
+        print('\nAbout to create redirect:')
+        pywikibot.showDiff(page.title(), new_title)
+        if not self.user_confirm('Do you want to create this redirect?'):
+            pywikibot.output('Skipping page {}'.format(page))
+            self.counter['skip'] += 1
+            return
+        
+        redir.text = '#הפניה [[' + page.title() + ']]'
+        redir.save(summary=self.opt.summary)
+        self.counter['create'] += 1
 
 
 def main(*args: str) -> None:
@@ -91,8 +91,8 @@ def main(*args: str) -> None:
     local_args = gen_factory.handle_args(local_args)
     gen = gen_factory.getCombinedGenerator(preload=True)
     if not gen:
-    	pywikibot.bot.suggest_help(missing_generator=True)
-    	return
+        pywikibot.bot.suggest_help(missing_generator=True)
+        return
     
     options = DEFAULT_ARGS
     for arg in local_args:
@@ -103,7 +103,7 @@ def main(*args: str) -> None:
         elif option in ('regex', 'always'):
             options[option] = True
         else:
-        	raise ValueError(f'"{arg}" is invalid arg.')
+            raise ValueError(f'"{arg}" is invalid arg.')
     
     bot = CreateRedirectsBot(gen=gen, **options)
     bot.run()
