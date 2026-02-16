@@ -1,0 +1,5 @@
+venv
+*pycache*
+*apicache*
+throttle.ctrl
+*.lwp

@@ -74,10 +74,10 @@ class KetaTagsBot(SingleSiteBot, ExistingPageBot):
         #can be replaced by: (but not working)
         #cctk = CosmeticChangesToolkit(page)
         #text = cctk.removeEmptySections(page.text)
-        while re.search('===.+?===\s+?===?[^=]', text):
-            text = re.sub('===.+?===\s+?(===?[^=])', '\\1', text)
-        while re.search('==.+?==\s+?==[^=]', text):
-            text = re.sub('==.+?==\s+?(==[^=])', '\\1', text)
+        while re.search(r'===.+?===\s+?===?[^=]', text):
+            text = re.sub(r'===.+?===\s+?(===?[^=])', '\\1', text)
+        while re.search(r'==.+?==\s+?==[^=]', text):
+            text = re.sub(r'==.+?==\s+?(==[^=])', '\\1', text)
         
         if text != oldtext:
             self.opt.summary = 'הסרת פסקאות ריקות, ' +self.opt.summary
@@ -118,18 +118,19 @@ class KetaTagsBot(SingleSiteBot, ExistingPageBot):
             if keta_end not in content:
                 content += keta_end
             
-            #reposition the tags
-            while '\n'+keta_end in content:
-                content = content.replace('\n'+keta_end, keta_end+'\n')
-            while keta_start+'\n' in content:
-                content = content.replace(keta_start+'\n', '\n'+keta_start)
-            while ' '+keta_end in content:
-                content = content.replace(' '+keta_end, keta_end+' ')
-            while keta_start+' ' in content:
-                content = content.replace(keta_start+' ', ' '+keta_start)
-            #to avoid damage from titles
-            content = content.replace(keta_start+'==', keta_start+'\n==')
-            content = content.replace('=='+keta_end, '==\n'+keta_end)
+            if content != section.content: # only if a tag added
+                #reposition the tags
+                while '\n'+keta_end in content:
+                    content = content.replace('\n'+keta_end, keta_end+'\n')
+                while keta_start+'\n' in content:
+                    content = content.replace(keta_start+'\n', '\n'+keta_start)
+                while ' '+keta_end in content:
+                    content = content.replace(' '+keta_end, keta_end+' ')
+                while keta_start+' ' in content:
+                    content = content.replace(keta_start+' ', ' '+keta_start)
+                #to avoid damage from titles
+                content = content.replace(keta_start+'==', keta_start+'\n==')
+                content = content.replace('=='+keta_end, '==\n'+keta_end)
             
             new_section = textlib.Section(section.title, content)
             new_sections.append(new_section)

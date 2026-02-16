@@ -4,14 +4,15 @@ from subprocess import run
 from os import chdir
 
 paws = False
-pwb_dir = '/storage/emulated/0/python/pywikibot'
+pc = True
+pwb_dir = '../pywikibot'
 if paws:
 	pwb_dir = '/srv/paws/pwb'
 
 chdir(pwb_dir)
 
 #useful params
-call = ['python', 'pwb.py']
+call = ['python3', 'pwb.py']
 user = '-user:ShalomOrobot'
 main_user = '-user:shalomori123'
 site = '-site:wikisource:he'
@@ -19,8 +20,8 @@ pedia = '-site:wikipedia:he'
 pt = '-pt:0'
 all_pages = '-start:!'
 draft = '-page:משתמש:Shalomori123/טיוטה'
-visual_editor = ['<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" ([^>\s].*?)="" />', '<קטע \\1=\\2 \\3/>', '<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" />', '<קטע \\1=\\2/>',
-"'''<קטע התחלה ?= ?([^>\s].*?)/>", "<קטע התחלה=\\1/>'''", "<קטע סוף ?= ?([^>\s].*?)/>'''", "'''<קטע סוף=\\1/>", '-regex', '-summary:תיקון נזקי העורך החזותי לתגי קטע']
+visual_editor = [r'<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" ([^>\s].*?)="" />', '<קטע \\1=\\2 \\3/>', r'<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" />', '<קטע \\1=\\2/>',
+r"'''<קטע התחלה ?= ?([^>\s].*?)/>", "<קטע התחלה=\\1/>'''", r"<קטע סוף ?= ?([^>\s].*?)/>'''", "'''<קטע סוף=\\1/>", '-regex', '-summary:תיקון נזקי העורך החזותי לתגי קטע']
 
 
 #init scripts
@@ -42,7 +43,7 @@ visual_editor = ['<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" ([^>\s].*?)="" /
 
 #useful one-time temp
 #run(call + ['replace', '', '', '-regex', '-prefixindex:', '-summary:'])
-#run(call + ['keta_3.0', '-page:', '-regex:'])
+#run(call + ['keta_3.0', '-page:', '-regex:', '-group:2,3'])
 #run(call + ['sources_bot', '-prefixindex:'])
 #run(call + ['touch', '-transcludes:temp'])
 #run(call + ['rename_bot', '-change:', '-to:', '-regex', '-prefixindex:', '-summary:שינוי שם למהדורה'])
@@ -64,6 +65,9 @@ visual_editor = ['<קטע (התחלה|סוף) ?= ?"([^>\s].*?)" ([^>\s].*?)="" /
 
 #one-time scripts (newest first)
 #run(call + [])
+#run(call + ['keta_3.0', '-cat:שולחן ערוך אבן העזר', '-regex:(===? ?(\[\[שולחן ערוך .*?\|)?סעיף (ק?[ט-צ]|ק?[ט-צ]?[א-ט])\]?\]? ?=?==)', '-group:3'])
+#run(call + ['keta_3.0', '-cat:שולחן ערוך יורה דעה', '-regex:(===? ?(\[\[שולחן ערוך .*?\|)?סעיף (ק?[ט-צ]|ק?[ט-צ]?[א-ט])\]?\]? ?=?==)', '-group:3'])
+#run(call + ['keta_3.0', '-cat:שולחן ערוך אורח חיים', '-regex:(===? ?(\[\[שולחן ערוך .*?\|)?סעיף (ק?[ט-צ]|ק?[ט-צ]?[א-ט])\]?\]? ?=?==)', '-group:3'])
 #run(call + ['replace', '==רש"י==', '==רש"י (ריב"ן)==', '{{כותרת לעמוד בגמרא|נזיר|', '{{כותרת לעמוד בגמרא|מפרש1=רש"י (ריב"ן)|נזיר|', '-cat:בבלי מסכת נזיר', '-summary:החלפת "רש"י" ב"רש"י (ריב"ן)"'])
 #run(call + ['replace', '(מפרש1=|==) ?רש"י \(ריב"ן\) ?(\||==)', '\\1מיוחס לרש"י\\2', '-regex', '-cat:בבלי מסכת נדרים', '-summary:החלפת רש"י (ריב"ן) -> מיוחס לרש"י'])
 #run(call + [pedia, 'subpages_content'])
