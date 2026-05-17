@@ -5,12 +5,13 @@ import re
 temp = 'תבנית:דגל'
 head = '{{#בחר:{{{1}}}\n'
 tail = '}}'
-
-content = head
-references = dict() # target: [refs,]
+target_page_title = 'טיוטה:דגל/שם הקובץ'
 
 sub_name = lambda p: p.title().replace(temp + '/', '')
 format_key = lambda k: '|' + k + ' = '
+
+content = head
+references = dict() # target: [refs,]
 
 for page in PrefixingPageGenerator(prefix=temp + '/'):
     name = sub_name(page)
@@ -37,4 +38,10 @@ content += tail
 for tar, refs in references.items():
     content = content.replace(format_key(tar), '|' + '|'.join(refs) + format_key(tar))
 
-print(content)
+
+site = pywikibot.Site()
+target_page = pywikibot.Page(site, target_page_title)
+target_page.text = content
+target_page.save(summary="תוכן דפי משנה של [["+temp+"]]")
+
+print(f"Successfully saved to {target_page_title}")
