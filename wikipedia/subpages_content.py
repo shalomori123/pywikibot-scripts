@@ -25,7 +25,7 @@ for page in PrefixingPageGenerator(prefix=temp + '/'):
         continue
         
     text = page.text
-    text = re.sub('<noinclude>[\s\S]*?(</noinclude>)?', '', text).strip()
+    text = re.sub(r'<noinclude>[\s\S]*?(</noinclude>)?', '', text).strip()
     
     if len(text) > 2000:
         print('skipping', name)
