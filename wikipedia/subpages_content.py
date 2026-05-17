@@ -9,11 +9,14 @@ tail = '}}'
 content = head
 references = dict() # target: [refs,]
 
+sub_name = lambda p: p.title().replace(temp + '/', '')
+format_key = lambda k: '|' + k + ' = '
+
 for page in PrefixingPageGenerator(prefix=temp + '/'):
-    name = page.title().replace(temp + '/', '')
+    name = sub_name(page)
     
     if page.isRedirectPage():
-        target = page.getRedirectTarget().title().replace(temp + '/', '')
+        target = sub_name(page.getRedirectTarget())
         if target in references:
             references[target].append(name)
         else:
@@ -27,11 +30,11 @@ for page in PrefixingPageGenerator(prefix=temp + '/'):
         print('skipping', name)
         continue
         
-    content += '|' + name + ' = ' + text + '\n'
+    content += format_key(name) + text + '\n'
     
 content += tail
 
 for tar, refs in references.items():
-    content = content.replace('|' + tar + ' = ', '|' + '|'.join(refs) + '|' + tar + ' = ')
+    content = content.replace(format_key(tar), '|' + '|'.join(refs) + format_key(tar))
 
 print(content)
